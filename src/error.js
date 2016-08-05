@@ -4,8 +4,6 @@ export default class ScolaError extends Error {
 
     const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
 
-    console.log(match);
-
     if (!match) {
       return;
     }
