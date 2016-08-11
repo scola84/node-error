@@ -14,15 +14,15 @@ export default class ScolaError extends Error {
     this.detail = match[4];
   }
 
-  toString(i18n, prefix) {
-    if (typeof i18n === 'undefined') {
+  toString(string, prefix) {
+    if (typeof string === 'undefined') {
       return 'Error: ' + this.status + ' ' + this.code +
         (this.detail && this.status < 500 ? ' ' + this.detail : '');
     }
 
     prefix = prefix || this.prefix;
 
-    return i18n.string().format(prefix + this.code, {
+    return string.format(prefix + this.code, {
       detail: this.detail
     });
   }
