@@ -2,13 +2,15 @@ export default class ScolaError extends Error {
   constructor(message, prefix = 'scola.error.') {
     super(message);
 
-    const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
+    const match = message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
 
     if (!match) {
       return;
     }
 
+    this.message = message;
     this.prefix = prefix;
+
     this.status = Number(match[2]);
     this.code = match[3];
     this.detail = match[4];
