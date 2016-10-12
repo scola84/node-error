@@ -16,6 +16,14 @@ export default class ScolaError extends Error {
     this.detail = match[4];
   }
 
+  static fromError(error, message) {
+    if (error.status) {
+      return error;
+    }
+
+    return new ScolaError(message + ' ' + error.message);
+  }
+
   toString(string, prefix) {
     if (typeof string === 'undefined') {
       return 'Error: ' + this.status + ' ' + this.code +
