@@ -11,16 +11,17 @@ export default class ScolaError extends Error {
     this._parse();
   }
 
-  _parse() {
-    const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
-
-    if (!match) {
-      return;
+  toString(string = null, prefix = null) {
+    if (string === null) {
+      return 'Error: ' + this.status + ' ' + this.code +
+        (this.detail && this.status < 500 ? ' ' + this.detail : '');
     }
 
-    this.status = Number(match[2]);
-    this.code = match[3];
-    this.detail = match[4];
+    prefix = prefix || this.prefix;
+
+    return string.format(prefix + this.code, {
+      detail: this.detail
+    });
   }
 
   static fromError(error, message) {
@@ -31,16 +32,15 @@ export default class ScolaError extends Error {
     return new ScolaError(message + ' ' + error.message);
   }
 
-  toString(string, prefix) {
-    if (typeof string === 'undefined') {
-      return 'Error: ' + this.status + ' ' + this.code +
-        (this.detail && this.status < 500 ? ' ' + this.detail : '');
+  _parse() {
+    const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
+
+    if (!match) {
+      return;
     }
 
-    prefix = prefix || this.prefix;
-
-    return string.format(prefix + this.code, {
-      detail: this.detail
-    });
+    this.status = Number(match[2]);
+    this.code = match[3];
+    this.detail = match[4];
   }
 }
