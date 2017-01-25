@@ -1,9 +1,8 @@
 export default class ScolaError extends Error {
-  constructor(message = '', prefix = 'scola.error.') {
+  constructor(message) {
     super(message);
 
     this.message = message;
-    this.prefix = prefix;
     this.status = -1;
     this.code = -1;
     this.detail = null;
@@ -11,13 +10,11 @@ export default class ScolaError extends Error {
     this._parse();
   }
 
-  toString(string = null, prefix = null) {
+  toString(string = null, prefix = 'scola.error.') {
     if (string === null) {
       return 'Error: ' + this.status + ' ' + this.code +
         (this.detail && this.status < 500 ? ' ' + this.detail : '');
     }
-
-    prefix = prefix || this.prefix;
 
     return string.format(prefix + this.code, {
       detail: this.detail
