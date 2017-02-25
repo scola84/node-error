@@ -6,6 +6,7 @@ export default class ScolaError extends Error {
     this.status = -1;
     this.code = -1;
     this.detail = null;
+    this.stack = new Error().stack;
 
     this._parse();
   }
