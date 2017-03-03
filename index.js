@@ -1,1 +1,5 @@
-export { default as ScolaError } from './src/error';
+import ScolaError from './src/error';
+
+export {
+  ScolaError
+};
