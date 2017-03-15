@@ -22,14 +22,6 @@ export default class ScolaError extends Error {
     });
   }
 
-  static fromError(error, message) {
-    if (error.status) {
-      return error;
-    }
-
-    return new ScolaError(message + ' ' + error.message);
-  }
-
   _parse() {
     const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
 
