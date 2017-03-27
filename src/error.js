@@ -14,7 +14,8 @@ export default class ScolaError extends Error {
   toString(string = null, prefix = 'scola.error.') {
     if (string === null) {
       return 'Error: ' + this.status + ' ' + this.code +
-        (this.detail && this.status < 500 ? ' ' + this.detail : '');
+        (this.detail !== null && this.status < 500 ?
+          ' ' + this.detail : '');
     }
 
     return string.format(prefix + this.code, {
@@ -23,9 +24,10 @@ export default class ScolaError extends Error {
   }
 
   _parse() {
-    const match = this.message.match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
+    const match = this.message
+      .match(/(Error: )?(\d{3})?\s?(\w+)\s?(.*)?/);
 
-    if (!match) {
+    if (match === null) {
       return;
     }
 
