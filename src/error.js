@@ -12,15 +12,17 @@ export default class ScolaError extends Error {
   }
 
   toString(string = null, prefix = 'scola.error.') {
-    if (string === null) {
-      return 'Error: ' + this.status + ' ' + this.code +
-        (this.detail !== null && this.status < 500 ?
-          ' ' + this.detail : '');
+    if (string !== null) {
+      return string.format(prefix + this.code, {
+        detail: this.detail
+      });
     }
 
-    return string.format(prefix + this.code, {
-      detail: this.detail
-    });
+    return 'Error:' +
+      ' ' + this.status +
+      ' ' + this.code +
+      (this.detail !== null && this._status < 500 ?
+        ' ' + this.detail : '');
   }
 
   _parse() {
@@ -33,6 +35,7 @@ export default class ScolaError extends Error {
 
     this.status = Number(match[2]);
     this.code = match[3];
-    this.detail = match[4];
+    this.detail = typeof match[4] === 'string' ?
+      match[4] : null;
   }
 }
