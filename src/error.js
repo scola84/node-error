@@ -8,12 +8,25 @@ export default class ScolaError extends Error {
     this.detail = null;
     this.stack = new Error(message).stack;
 
+    this._prefix = {
+      string: 'scola.error.'
+    };
+
     this._parse();
   }
 
-  toString(string = null, prefix = 'scola.error.') {
+  prefix(name, value = null) {
+    if (value === null) {
+      return this._prefix[name];
+    }
+
+    this._prefix[name] = value + '.';
+    return this;
+  }
+
+  toString(string = null) {
     if (string !== null) {
-      return string.format(prefix + this.code, {
+      return string.format(this._prefix.string + this.code, {
         detail: this.detail
       });
     }
