@@ -1,6 +1,6 @@
 {
   "name": "@scola/error",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Custom Error",
   "repository": "github:scola84/node-error",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
