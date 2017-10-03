@@ -1,3 +1,5 @@
+/* eslint no-undefined: 0 */
+
 export default class ScolaError extends Error {
   constructor(message) {
     super(message);
@@ -34,8 +36,19 @@ export default class ScolaError extends Error {
     return 'Error:' +
       ' ' + this.status +
       ' ' + this.code +
-      (this.detail !== null && this._status < 500 ?
+      (this.detail !== null && this.status < 500 ?
         ' ' + this.detail : '');
+  }
+
+  toJSON() {
+    return {
+      errors: [{
+        status: this.status,
+        code: this.code,
+        detail: this.detail !== null && this.status < 500 ?
+          this.detail : undefined
+      }]
+    };
   }
 
   _parse() {
