@@ -40,12 +40,14 @@ export default class ScolaError extends Error {
         ' ' + this.detail : '');
   }
 
-  toJSON() {
+  toJSON(detail = false) {
     return {
       errors: [{
         status: this.status,
         code: this.code,
-        detail: this.detail !== null && this.status < 500 ?
+        detail: detail === true ||
+          (this.detail !== null &&
+            this.status < 500) ?
           this.detail : undefined
       }]
     };
